@@ -296,7 +296,6 @@
 .comments__rating:before {
   content: "★★★★★";
   display: block;
-  
 }
 
 .comments__rating-items {
@@ -309,7 +308,7 @@
   flex-direction: row-reverse;
   overflow: hidden;
 }
-.comments__rating-item{
+.comments__rating-item {
   position: absolute;
   width: 0;
   height: 0;
@@ -318,21 +317,20 @@
   visibility: hidden;
   opacity: 1;
 }
-.comments__rating-label{
+.comments__rating-label {
   flex: 0 0 20%;
   height: 100%;
   cursor: pointer;
   color: #a3a3a7;
 }
-.comments__rating-label::before{
+.comments__rating-label::before {
   content: "★";
   display: block;
   transition: color 0.1s ease 0s;
 }
 .comments__rating-label:hover,
 .comments__rating-label:hover ~ .comments__rating-label,
-.comments__rating-label:checked ~ .comments__rating-label:hover
-{
+.comments__rating-label:checked ~ .comments__rating-label:hover {
   content: "★";
   display: block;
   color: #e0cc64;
@@ -340,8 +338,75 @@
 }
 
 .comments__rating-item:checked,
-.comments__rating-item:checked ~ .comments__rating-label
-{
-color: #ffd300;
+.comments__rating-item:checked ~ .comments__rating-label {
+  color: #ffd300;
+}
+
+@media (width<1350px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+  .left__part {
+    width: 100%;
+    padding: 40px 20px;
+    flex: 0;
+  }
+  .right__part {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 40px 20px;
+    flex: 0;
+  }
+  .left__content {
+    align-items: center;
+  }
+
+
+}
+@media (width<620px) {
+  .right__part {
+
+  width: auto;
+max-width: 527px;
+
+  .right__title,
+  .right__description,
+  .form,
+  .right__new-acc {
+    width: auto;
+    max-width: 527px;
+  }
+
+  .form{
+    
+    width: 100%;
+
+  }
+  .right__title{
+    font-size: 48px;
+    line-height: 48px;
+  }
+}
+.left__content{
+  max-width: 527px;
+  .comments,
+  .left__title,
+  .left__description{
+  width: auto;
+  max-width: 527px;
+}
+.left__title{
+  font-size: 48px;
+  line-height: 48px;
+}
+.left__description{
+  margin-bottom: 50px;
+}
+}
+
 }
 </style>
