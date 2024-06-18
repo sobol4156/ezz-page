@@ -1,4 +1,14 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+
+const totalValue = ref(0)
+const ratingValues = [5,4,3,2,1]
+
+
+const setRating= (value)=>{
+  totalValue.value = value
+}
+</script>
 
 <template>
   <div class="wrapper">
@@ -10,72 +20,15 @@
           professional website.
         </p>
         <div class="comments">
-          <div class="comments__rating">
-            <div class="comments__rating-items">
-              <input
-                class="comments__rating-item"
-                type="radio"
-                id="star-5"
-                name="rating"
-                value="5"
-              />
-              <label
-                class="comments__rating-label"
-                for="star-5"
-                title="Оценка «5»"
-              ></label>
-
-              <input
-                class="comments__rating-item"
-                type="radio"
-                id="star-4"
-                name="rating"
-                value="4"
-              />
-              <label
-                class="comments__rating-label"
-                for="star-4"
-                title="Оценка «4»"
-              ></label>
-
-              <input
-                class="comments__rating-item"
-                type="radio"
-                id="star-3"
-                name="rating"
-                value="3"
-              />
-              <label
-                class="comments__rating-label"
-                for="star-3"
-                title="Оценка «3»"
-              ></label>
-
-              <input
-                class="comments__rating-item"
-                type="radio"
-                id="star-2"
-                name="rating"
-                value="2"
-              />
-              <label
-                class="comments__rating-label"
-                for="star-2"
-                title="Оценка «2»"
-              ></label>
-
-              <input
-                class="comments__rating-item"
-                type="radio"
-                id="star-1"
-                name="rating"
-                value="1"
-              />
-              <label
-                class="comments__rating-label"
-                for="star-1"
-                title="Оценка «1»"
-              ></label>
+          <div class="rating" :data-total-value="totalValue">
+            <div
+              class="rating__item"
+              v-for="value in ratingValues"
+              :key="value"
+              :data-item-value="value"
+              @click="setRating(value)"
+            >
+              ★
             </div>
           </div>
           <span class="comments__feedback">
@@ -153,6 +106,31 @@
   display: flex;
   flex-direction: column;
 }
+
+.rating {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+}
+
+.rating__item {
+  color: dcdcdc;
+  font-size: 40px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.rating__item:hover,
+.rating__item:hover ~ .rating__item {
+  color: #989898;
+}
+.rating[data-total-value="1"] .rating__item:nth-child(n + 5),
+.rating[data-total-value="2"] .rating__item:nth-child(n + 4),
+.rating[data-total-value="3"] .rating__item:nth-child(n + 3),
+.rating[data-total-value="4"] .rating__item:nth-child(n + 2),
+.rating[data-total-value="5"] .rating__item:nth-child(n + 1) {
+  color: gold;
+}
+
 .left__content {
   display: flex;
   flex-direction: column;
@@ -287,61 +265,6 @@
   }
 }
 
-.comments__rating {
-  display: inline-block;
-  position: relative;
-  font-size: 40px;
-  width: 167px;
-}
-.comments__rating:before {
-  content: "★★★★★";
-  display: block;
-}
-
-.comments__rating-items {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: row-reverse;
-  overflow: hidden;
-}
-.comments__rating-item {
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 0;
-  left: 0;
-  visibility: hidden;
-  opacity: 1;
-}
-.comments__rating-label {
-  flex: 0 0 20%;
-  height: 100%;
-  cursor: pointer;
-  color: #a3a3a7;
-}
-.comments__rating-label::before {
-  content: "★";
-  display: block;
-  transition: color 0.1s ease 0s;
-}
-.comments__rating-label:hover,
-.comments__rating-label:hover ~ .comments__rating-label,
-.comments__rating-label:checked ~ .comments__rating-label:hover {
-  content: "★";
-  display: block;
-  color: #e0cc64;
-  transition: color 0.3s ease;
-}
-
-.comments__rating-item:checked,
-.comments__rating-item:checked ~ .comments__rating-label {
-  color: #ffd300;
-}
-
 @media (width<1350px) {
   .wrapper {
     flex-direction: column;
@@ -364,49 +287,43 @@
   .left__content {
     align-items: center;
   }
-
-
 }
 @media (width<620px) {
   .right__part {
-
-  width: auto;
-max-width: 527px;
-
-  .right__title,
-  .right__description,
-  .form,
-  .right__new-acc {
     width: auto;
     max-width: 527px;
-  }
 
-  .form{
-    
-    width: 100%;
+    .right__title,
+    .right__description,
+    .form,
+    .right__new-acc {
+      width: auto;
+      max-width: 527px;
+    }
 
+    .form {
+      width: 100%;
+    }
+    .right__title {
+      font-size: 48px;
+      line-height: 48px;
+    }
   }
-  .right__title{
-    font-size: 48px;
-    line-height: 48px;
+  .left__content {
+    max-width: 527px;
+    .comments,
+    .left__title,
+    .left__description {
+      width: auto;
+      max-width: 527px;
+    }
+    .left__title {
+      font-size: 48px;
+      line-height: 48px;
+    }
+    .left__description {
+      margin-bottom: 50px;
+    }
   }
-}
-.left__content{
-  max-width: 527px;
-  .comments,
-  .left__title,
-  .left__description{
-  width: auto;
-  max-width: 527px;
-}
-.left__title{
-  font-size: 48px;
-  line-height: 48px;
-}
-.left__description{
-  margin-bottom: 50px;
-}
-}
-
 }
 </style>
